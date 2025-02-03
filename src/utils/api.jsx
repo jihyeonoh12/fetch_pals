@@ -1,5 +1,3 @@
-// import React, {useCallback}  from "react";
-
 const fetchDogs = async (queryParam, pageParam, sortParam) => {
       try {
         const response = await fetch(`https://frontend-take-home-service.fetch.com/dogs/search?${queryParam}${pageParam}${sortParam}` , {

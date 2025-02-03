@@ -4,12 +4,10 @@ import SignIn from './components/SignIn'
 import SearchPage from './pages/SearchPage'
 import './App.css'
 
-
 function App() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [authenticated, setAuthenticated] = useState(false);
-
 
   const handleLogin = useCallback(
     async (e) => {
@@ -18,7 +16,6 @@ function App() {
     },
     [name, email] 
   );
-
 
   return (
     <>
