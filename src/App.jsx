@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react'
 import { login } from './utils/login'
 import SignIn from './components/SignIn'
-import SearchComponent from './components/SearchComponent'
+import SearchPage from './pages/SearchPage'
 import './App.css'
 
 
@@ -30,7 +30,7 @@ function App() {
       handleLogin={handleLogin}
       />
     ) : (
-        <SearchComponent />
+        <SearchPage />
     )
     }
   </div>
