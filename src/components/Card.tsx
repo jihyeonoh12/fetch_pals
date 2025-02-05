@@ -15,6 +15,7 @@ const Card = ({data, liked, setLiked} : {data: Dog, liked:Liked, setLiked: (data
           <div className="card-body">
             <div className="d-flex justify-content-between">
             <h3 className="card-title fw-bold mb-2">{data.name}</h3>
+            
             <button className="like-btn" onClick={() => {toggleLike(data, setLiked)}} >
                 <h4 className={`text-${likedIcon ? 'danger' : 'dark'}`}>
                   <i className={`bi bi-heart${likedIcon ? '-fill' : ''}`}></i>

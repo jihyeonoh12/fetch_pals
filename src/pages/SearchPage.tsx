@@ -4,7 +4,7 @@ import { Dog, Liked } from '../types/index';
 import TabBanner from "../components/TabBanner";
 import Pagination from "../components/Pagination";
 import SearchForm from "../components/SearchForm";
-import { fetchDogs, fetchBreedList } from "../utils/api";
+import { fetchDogs, fetchBreedList, findMatch } from "../utils/api";
 
 
 const SearchPage = () => {
@@ -20,6 +20,10 @@ const SearchPage = () => {
     const [liked, setLiked] = useState({} as Liked)
     const [sortMethod, setSortMethod] = useState("ascending");
     const [errorType, setErrorType] = useState("");
+    const [finalMatch, setFinalMatch] = useState({} as Dog);
+    const [matched, setMatched] = useState(false);
+
+
    
     useEffect(() => {
         const getBreedLists = async () => {
@@ -45,6 +49,10 @@ const SearchPage = () => {
     useEffect(() => {
       setCurrentPage(0);
     }, [selectedBreed, zipCode])
+
+    useEffect(() => {
+      setMatched(false);
+    }, [liked])
 
     
     const handleFetchDogs = useCallback(async () => {
@@ -72,6 +80,23 @@ const SearchPage = () => {
       e.preventDefault();
       await handleFetchDogs();
     }
+
+    const handleMatch = useCallback(async (liked : Liked) => {
+      setLoading(true);
+      try {
+        const ids = Object.keys(liked);
+        const match = await findMatch(ids);
+        console.log('match');
+        console.log(match);
+        setFinalMatch(match[0]);
+        setMatched(true);
+      } catch (err) {
+        setError(error);
+        console.error("Fetching match result failed:", error);
+      } finally {
+        setLoading(false);
+      }
+    }, [liked] )
 
     if(loading)
       return (
@@ -106,6 +131,22 @@ const SearchPage = () => {
                     Time to add your favorite pups! 🐶
                   </div>
                 )}
+                <div>
+                {(Object.values(liked).length > 0 && Object.keys(finalMatch).length > 0 && matched) ? (
+                  <div>
+                    <h4 className="text-primary">Here is your match</h4>
+                    <Card data={finalMatch} liked={liked} setLiked={setLiked}/>
+
+                  </div>
+                ) : (
+                  <div>
+                    <h4 className="text-primary">Find your match</h4>
+                    <button className="btn btn-primary" onClick={() => handleMatch(liked)}>Find your Match</button>
+                  </div>
+                )}
+                
+
+                </div>
               </div>
             ) : (
               <div>
@@ -123,8 +164,7 @@ const SearchPage = () => {
                 {(totalPages > 0 && dogList.length >0) ? dogList.map((dog : Dog) => (
                   <Card data={dog} liked={liked} setLiked={setLiked}/>
                 )) : (
-                  <div>
-                    Nothing here yet! Begin searching to find results.</div>
+                  <div>Nothing here yet! Begin searching to find results.</div>
                 )}
                </div>
                 <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} totalPages={totalPages}/>

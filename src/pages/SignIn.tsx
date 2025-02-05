@@ -34,7 +34,7 @@ const SignIn = ({name, email, setName, setEmail, setAuthenticated }) =>{
               <form>
                 <div className="mb-3 text-start">
                   <label className="">Email address</label>
-                  <input type="email" className="form-control" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                  <input type="email" className="form-control" 
                   onChange={(e) => setEmail(e.target.value)} required/>
                 </div>
                 <div className="mb-3 text-start">
