@@ -1,4 +1,3 @@
-
 export interface Dog {
     id: string
     img: string

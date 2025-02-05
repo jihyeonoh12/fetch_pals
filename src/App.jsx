@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react'
-import { login } from './utils/login'
-import SignIn from './components/SignIn'
+import { login } from './utils/api'
+import SignIn from './pages/SignIn'
 import SearchPage from './pages/SearchPage'
 import './App.css'
 

@@ -19,14 +19,16 @@ const SearchPage = () => {
     const [tab, setTab] = useState("searchTab");
     const [liked, setLiked] = useState({} as Liked)
     const [sortMethod, setSortMethod] = useState("ascending");
-  
+    const [errorType, setErrorType] = useState("");
+   
     useEffect(() => {
         const getBreedLists = async () => {
             try {
                 setLoading(true);
-                const { result } = await fetchBreedList();
+                const { result, errMsg } = await fetchBreedList();
                 setBreedList(result);
                 setLoading(false);
+                setErrorType(errMsg);
             } catch (error) {
                 setError(error);
             }
@@ -71,9 +73,28 @@ const SearchPage = () => {
       await handleFetchDogs();
     }
 
-    if (loading || error) return <></>;
+    if(loading)
+      return (
+        <div className="container">
+          <h1 className="text-primary">Loading...</h1>
+        </div>
+      )
+    if (error)  
+      return (
+        <div className="container">
+          <h1><i className="bi bi-bug"></i> Found a Bug!</h1>
+          <p>We couldn't fetch the data. Please contact us for help.</p>
+        </div>
+        )
+    if (errorType == "Error: 401") 
+      return (
+        <div className="container">
+          <h1><i className="bi bi-cookie"></i> We need your Cookie!</h1>
+          <p>It looks like your phone isn't sending cookies. Please disable "Prevent Cross-Site Tracking" and "Block All Cookies" in your browser settings to allow us to retrieve data.</p>
+        </div>
+      )
 
-    return (
+      return (
       <div className="container">
         <TabBanner tab={tab} setTab={setTab}/>
             {tab === 'favoriteTab' ? (
