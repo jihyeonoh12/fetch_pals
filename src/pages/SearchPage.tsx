@@ -97,6 +97,10 @@ const SearchPage = () => {
       }
     }, [liked] )
 
+    console.log('liked');
+    console.log(Object.values(liked).length);
+
+
     if(loading)
       return (
         <div className="container">
@@ -139,8 +143,7 @@ const SearchPage = () => {
                   </div>
                 ) : (
                   <div>
-                    <h4 className="text-primary">Find your match</h4>
-                    <button className="btn btn-primary" onClick={() => handleMatch(liked)}>Find your Match</button>
+                    <button disabled={Object.values(liked).length === 0} className="btn btn-primary" onClick={() => handleMatch(liked)}>Find your Match</button>
                   </div>
                 )}
                 
