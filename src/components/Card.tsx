@@ -5,6 +5,7 @@ import toggleLike from "../utils/toggleLike";
 
 
 const Card = ({data, liked, setLiked} : {data: Dog, liked:Liked, setLiked: (data: Liked) => void}) => {
+  const likedIcon = liked[data.id] && liked[data.id].liked;
     return (
         <div key={data.id} className="col-md-4">
         <div className="card h-100 text-start">
@@ -15,8 +16,8 @@ const Card = ({data, liked, setLiked} : {data: Dog, liked:Liked, setLiked: (data
             <div className="d-flex justify-content-between">
             <h3 className="card-title fw-bold mb-2">{data.name}</h3>
             <button className="like-btn" onClick={() => {toggleLike(data, setLiked)}} >
-                <h4 className="">
-                  <i className={`bi bi-heart${liked[data.id] && liked[data.id].liked ? '-fill' : ''}`}></i>
+                <h4 className={`text-${likedIcon ? 'danger' : 'dark'}`}>
+                  <i className={`bi bi-heart${likedIcon ? '-fill' : ''}`}></i>
                 </h4>
               </button>
             </div>
