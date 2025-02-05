@@ -86,8 +86,7 @@ const SearchPage = () => {
       try {
         const ids = Object.keys(liked);
         const match = await findMatch(ids);
-        console.log('match');
-        console.log(match);
+
         setFinalMatch(match[0]);
         setMatched(true);
       } catch (err) {

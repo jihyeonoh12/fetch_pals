@@ -95,16 +95,13 @@ const findMatch = async (ids) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(ids)
   });
-  const matchDetail = [];
     if (!response.ok) throw new Error("Failed to find match");
     const result = await response.json();
     if(result.match) {
       const matchDetail = await fetchDogDetails([result.match]);
-      console.log('matchDetail');
-      console.log(matchDetail);
-
       return matchDetail;
     }
+    const matchDetail = [];
       return matchDetail;
   } catch (err) {
     console.error("Error matching dog:", err);
